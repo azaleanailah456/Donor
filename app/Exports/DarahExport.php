@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\NamaModel;
+use App\Models\Darah;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -14,7 +14,7 @@ class DarahExport implements FromCollection
     */
     public function collection()
     {
-        return Report::with('response')->orderBy('created_at', 'DESC',)->get();
+        return Darah::with('response')->orderBy('created_at', 'DESC',)->get();
     }
 
     public function headings() : array
@@ -24,7 +24,7 @@ class DarahExport implements FromCollection
             'NIK Pelapor',
             'No Telp Pelapor',
             'Tanggal Pelaporan',
-            'Pengaduan',
+            'Donor',
             'Status Response',
             'Pesan Response',
         ];
@@ -34,8 +34,8 @@ class DarahExport implements FromCollection
     {
         return [
             $item->id,
-            $item->nik,
-            $item->nama,
+            $item->name,
+            $item->umur,
             $item->no_telp,
             \Carbon\Carbon::parse($item->created_at)->format('j F, Y'),
             $item->darah,

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use Excel;
-use App\Exports\ReportExport;
+use App\Exports\DarahExport;
 use App\Models\Response;
 
 
@@ -48,12 +48,12 @@ class DarahController extends Controller
        //selain .xlsx juga bisa .csv
        $file_name = 'data_keseluruhan_pengaduan.xlsx';
        //memanggil file ReportExport dan mendownloadnya dengan nama seperti $file_name
-       return Excel::download(new ReportExport, $file_name);
+       return Excel::download(new DarahExport, $file_name);
     }
      
     public function index()
     {
-        $darahs = Darah::orderBy('created_at', 'DESC')->get();  
+        $darahs = Darah::orderBy('created_at', 'DESC')->simplePaginate(2);  
         return view('index', compact('darahs'));
     }
 
@@ -61,7 +61,7 @@ class DarahController extends Controller
     {
         $search = $request->search;
 
-        $darahs = Darah::with('response')->where('nama', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'DESC')->get(); 
+        $darahs = Darah::with('response')->where('name', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'DESC')->get(); 
         return view('data', compact('darahs'));
     }
 
@@ -70,13 +70,8 @@ class DarahController extends Controller
         $search =$request->search;
 
         //with : ambil relasi (nama fungsi hasOne/hasMany/ belongsTo di modelnya), ambil data dari relasi itu
-        $darahs = Darah::with('response')->where('nama', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'DESC')->get(); 
-        return view('data.petugas', compact('reports'));
-    }
-
-    public function login()
-    {
-        return view('login');
+        $darahs = Darah::with('response')->where('name', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'DESC')->get(); 
+        return view('data.petugas', compact('darahs'));
     }
 
     public function auth(Request $request)
@@ -91,6 +86,7 @@ class DarahController extends Controller
         $user = $request->only('email', 'password');
 
         if (Auth::attempt($user)) {
+            
             if (Auth::user()->role == 'admin') {
             return redirect()->route('data');
         }
@@ -126,7 +122,8 @@ class DarahController extends Controller
             'name' => 'required',
             'email' => 'required',
             'umur' => 'required',
-            'bb' => 'required|min:52',
+            'bb' => 'required',
+            'no_telp' => 'required|max:13',
             'donor' => 'required',
             'foto' => 'required|image|mimes:jpg,jpeg,png,svg',
         ]);
@@ -143,6 +140,7 @@ class DarahController extends Controller
             'email' => $request->email,
             'umur' => $request->umur,
             'bb' => $request->bb,
+            'no_telp' => $request->no_telp,
             'donor' => $request->donor,
             'foto' => $imgName,
         ]);
@@ -177,17 +175,17 @@ class DarahController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(darah $darah)
+    public function destroy($id)
     {
-        $data = Report::where('id', $id)->firstOrFail();
+        $data = Darah::where('id', $id)->firstOrFail();
         //$data isinya -> nik sampe foto dr pengaduan 
         //hapus foto data dr folder public : path . nama fotonya
         //nama foto nya diambil dari $data yang diatas trs ngambil dari column 'foto'
-        $image = public_path('assets/image/'.$data['foto']);
+        $image = public_path('assets/img/'.$data['foto']);
         unlink($image);
 
         $data->delete();
-        Response::where('report_id', $id)->delete();
+        Response::where('darah_id', $id)->delete();
         return redirect()->back();
     }
 }

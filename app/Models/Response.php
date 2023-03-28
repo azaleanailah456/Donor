@@ -15,7 +15,7 @@ class Response extends Model
         'pesan',
     ];
 
-    public function response()
+    public function darah()
     {
         return $this->hasOne
         (Response::class);

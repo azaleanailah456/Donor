@@ -26,14 +26,14 @@ Route::post('store', [DarahController::class, 'store'])->name('store');
 Route::post('/auth', [DarahController::class, 'auth'])->name('auth');
 Route::delete('delete/{id}', [DarahController::class, 'destroy'])->name('delete');
 
-Route::middleware(['isLogin', 'CekRole:Petugas'])->group(function() {
+Route::middleware(['isLogin', 'CekRole:petugas'])->group(function() {
     Route::get('/data/petugas', [DarahController::class, 'dataPetugas'])->name('data.petugas');
     Route::delete('delete/{id}', [DarahController::class, 'destroy'])->name('delete');
     Route::get('/response/edit/{darah_id}', [ResponseController::class, 'edit'])->name('response.edit');
     Route::patch('/response/update/{darah_id}', [ResponseController::class, 'update'])->name('response.update');
 });
 
-Route::middleware(['isLogin', 'CekRole:admin'])->group(function() {
+Route::middleware(['isLogin', 'CekRole:admin,petugas'])->group(function() {
     Route::get('logout', [DarahController::class, 'logout'])->name('logout');
 });
 

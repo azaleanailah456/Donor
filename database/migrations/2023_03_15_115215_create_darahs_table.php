@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('umur');
             $table->string('bb');
-            $table->string('donor');
+            $table->string('no_telp');
+            $table->enum('donor', ['A', 'B', 'O', 'AB']);
             $table->string('foto');
             $table->timestamps();
         });

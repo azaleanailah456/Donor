@@ -13,6 +13,8 @@ class darah extends Model
         'email',
         'umur',
         'bb',
+        'no_telp',
+        'pesan',
         'donor',
         'foto',
     ];

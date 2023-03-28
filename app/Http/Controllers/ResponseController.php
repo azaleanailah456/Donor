@@ -67,7 +67,7 @@ class ResponseController extends Controller
 
         Response::updateOrCreate(
             [
-                'report_id' => $report_id,
+                'darah_id' => $darah_id,
             ],
             [
                 'status' => $request->status,

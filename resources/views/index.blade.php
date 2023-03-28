@@ -58,7 +58,7 @@
     <div class="container">
       <h1>Welcome to Medilab</h1>
       <h2>We are team of talented designers making websites with Bootstrap</h2>
-      <a href="#contact" class="btn-get-started scrollto">Ayo Daftar!</a>
+      <a href="{{route('data')}}" class="btn-get-started scrollto">Lihat Data</a>
     </div>
   </section><!-- End Hero -->
 
@@ -68,8 +68,8 @@
     <section id="counts" class="counts">
       <div class="container">
         <div style="margin-bottom: 35px">
-            <h4>How to!</h4>
-            <h2><b>Step to Register as a Donor</b></h2>
+            <h4 style="color: #9e2531">How to!</h4>
+            <h2><b style="color: #6c0d17">Step to Register as a Donor</b></h2>
         </div>
         <div class="row">
           <div class="col-lg-3 col-md-6"> 
@@ -113,15 +113,31 @@
     <section id="contact" class="contact">
       <div class="container">
 
-        <div class="section-title">
-          <h2>Register Donor</h2>
+        <div class="title">
+          <h2><b style="color: #6c0d17">Register Donor</b></h2>
         </div>
       </div>
       <div class="container" style="justify-content: center">
         <div class="row mt-5" >
           <div class="col-lg-8 mt-5 mt-lg-0">
+
+            
+            @if ($errors->any())
+            <ul style="width: 100%; background: red; padding: 10px">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            @endif
+
+            @if (Session::get('success'))
+            <div style="width: 100%; background: green; padding: 5px">
+                {{ Session::get('success') }}
+            </div>
+            @endif
   
-            <form action="{{route('store')}}" method="post" role="form" class="php-email-form">
+            <form action="{{route('store')}}" method="post" role="form" enctype="multipart/form-data">
+              @csrf
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Nama" required>
@@ -158,12 +174,8 @@
                 <input class="form-control" type="file" name="foto">
             </div>
 
-              <div class="my-3">
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-
-              <div >
-                <button type="submit">Send </button>
+              <div style="margin-top: 10pxx">
+                <button type="submit" style="color: #fff">Send</button>
               </div>
             </form>
 
@@ -203,7 +215,7 @@
             <h4>Social Here</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Login</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{route('login')}}">Login</a></li>
             </ul>
           </div>
 
@@ -222,7 +234,7 @@
     <div class="container d-md-flex py-4">
 
       <div class="me-md-auto text-center text-md-start">
-        <div class="copyright">
+        <div class="copyright" style="color: #fff">
           &copy; Copyright <strong><span>Donor Darah</span></strong>. 2023
         </div>
       </div>

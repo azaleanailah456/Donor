@@ -10,12 +10,11 @@
     <table>
         <tr>
             <th>No</th>
-            <th>Nik</th>
-            <th>Nama</th>
-            <th>No Telp</th>
-            <th>Tanggal</th>
-            <th>Pengaduan</th>
-            <th>Gambar</th>
+            <th>Name</th>
+            <th>Umur</th>
+            <th>Berat Badan</th>
+            <th>Telp</th>
+            <th>Date</th>
             <th>Status Response</th>
             <th>Pesan Response</th>
         </tr>
@@ -23,12 +22,12 @@
         @foreach ($darahs as $darah)
         <tr>
             <td>{{$no++}}</td>
-            <td>{{$darah['nik']}}</td>
-            <td>{{$darah['nama']}}</td>
+            <td>{{$darah['name']}}</td>
+            <td>{{$darah['umur']}}</td>
+            <td>{{$darah['bb']}}</td>
             <td>{{$darah['no_telp']}}</td>
-            <td>{{\Carbon\Carbon::parse($darah['created_at'])->format('j, F, Y')}}</td>
-            <td>{{$darah ['pengaduan']}}</td>
             <td><img src="assets/image/{{$darah['foto']}}" width="80"></td>
+            <td>{{\Carbon\Carbon::parse($darah['created_at'])->format('j, F, Y')}}</td>
             <td>
                 @if ($darah['response'])
                     {{ $darah['response']['status']}}

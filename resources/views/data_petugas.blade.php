@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengaduan Masyarakat</title>
+    <title>Data Donor Darah</title>
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 </head>
 
 <body>
-    <h2 class="title-table">Laporan Keluhan</h2>
+    <h2 class="title-table">Laporan Donor</h2>
     <div style="display: flex; justify-content: center; margin-bottom: 30px">
         <a href="{{route('logout')}}" style="text-align: center">Logout</a>
         <div style="margin: 0 10px"> | </div>
@@ -36,7 +36,7 @@
                     <th>NIK</th>
                     <th>Nama</th>
                     <th>Telp</th>
-                    <th>Pengaduan</th>
+                    <th>BB</th>
                     <th>Gambar</th>
                     <th>Status Response</th>
                     <th>Pesan Response</th>
@@ -54,32 +54,25 @@
                     <td>{{$darah ['nik']}}</td>
                     <td>{{$darah ['nama']}}</td>
                     <td>{{$darah ['no_telp']}}</td>
-                    <td>{{$darah ['pengaduan']}}</td>
+                    <td>{{$darah ['bb']}}</td>
                     <td>
                         <img src="{{asset('assets/image/'.$darah->foto)}}" width="120">
                     </td>
                     <td>
-                        {{--cek apakah data report ini sudah memiliki relasi dengan data dr with('response')--}}
                         @if ($darah->response)
-                        {{--kalau ada hasil relansinya, ditampilkan bagian status--}}
                             {{ $darah->response['status']}}
                         @else
-                        {{--kalo gak ada tampilkan tanda ini--}}
                         -
                         @endif
                     </td>
                     <td>
-                        {{--cek apakah data report ini sudah memiliki relasi dengan data dr with('response')--}}
                         @if ($darah->response)
-                        {{--kalau ada hasil relansinya, ditampilkan bagian pesan--}}
                             {{$darah->response['pesan']}}
                         @else
-                        {{--kalo gak ada tampilkan tanda ini--}}
                         -
                         @endif
                     </td>
                     <td style="display: flex; justify-content: center;">
-                        {{--kirim data id dari foreach report ke path dinamis punya nya route response.edit--}}
                         <a href="{{route('response.edit', $darah->id)}}" class="back-btn">Send Response</a>
                     </td>
                 </tr>
