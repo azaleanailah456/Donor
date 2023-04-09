@@ -15,6 +15,8 @@
         <a href="{{route('logout')}}" style="text-align: center">Logout</a>
         <div style="margin: 0 10px"> | </div>
         <a href="/" style="text-align: center">Home</a>
+        <div style="margin: 0 10px"> | </div>
+        <a href="{{route('data.petugas')}}" class="btn-login" style="margin-left: 10px; margin-top: -2px">Refresh</a>
     </div>
 
     <div style="display: flex; justify-content: flex-end; align-items: center;">
@@ -22,21 +24,20 @@
             @csrf
             {{--menggunakan method GET karna route unutk masuk ke halaman data ini menggunakan ::get--}}
             <input type="text" name="search" placeholder="Cari berdasarkan nama...">
-            <button type="submit" class="btn-login" style="margin-top: -1px">Cari</button>
+            <button type="submit" class="btn-login" style="margin-top: -1px; margin-right: 30px; color: #fff">Cari</button>
         </form>
         {{-- refresh balik lagi ke route data karna nanti pas di kluk refresh mau bersihin riwayat pencarian 
              sebelumnya dan balikin lagi nya ke halaman data lagi--}}
-        <a href="{{route('data')}}" class="btn-login" style="margin-left: 10px; margin-top: -2px">Refresh</a>
     </div>
     <div style="padding: 0 30px">
         <table>
             <thead>
                 <tr>
                     <th width="5%">No</th>
-                    <th>NIK</th>
-                    <th>Nama</th>
+                    <th>Name</th>
+                    <th>Umur</th>
+                    <th>Berat Badan</th>
                     <th>Telp</th>
-                    <th>BB</th>
                     <th>Gambar</th>
                     <th>Status Response</th>
                     <th>Pesan Response</th>
@@ -51,10 +52,21 @@
                 <tr>
                     {{--menambahkan angka 1 dari $no di php tiap baris nya--}}
                     <td>{{$no++}}</td>
-                    <td>{{$darah ['nik']}}</td>
-                    <td>{{$darah ['nama']}}</td>
-                    <td>{{$darah ['no_telp']}}</td>
+                    <td>{{$darah ['name']}}</td>
+                    <td>{{$darah ['umur']}}</td>
                     <td>{{$darah ['bb']}}</td>
+                    @php
+                    $telp = substr_replace($darah->no_telp, "62", 0, 1)
+                    @endphp
+
+                    @php
+                    if ($darah->response) {
+                        $pesanWA = 'Hallo' . $darah->nama . '! pengaduan anda di' . $darah->response['status'] . '.Berikut ini pesan untuk anda : ' . $darah->response['pesan'];
+                    }else {
+                        $pesanWA = 'Belum ada data response!';
+                    }
+                    @endphp
+                    <td><a href="https://wa.me/{{$telp}}?text={{$pesanWA}}" target="_blank">{{$telp}}</a></td>
                     <td>
                         <img src="{{asset('assets/image/'.$darah->foto)}}" width="120">
                     </td>
@@ -73,7 +85,7 @@
                         @endif
                     </td>
                     <td style="display: flex; justify-content: center;">
-                        <a href="{{route('response.edit', $darah->id)}}" class="back-btn">Send Response</a>
+                        <a href="{{route('response.edit', $darah->id)}}" class="back-btn" style="color: white">Send Response</a>
                     </td>
                 </tr>
                 @endforeach

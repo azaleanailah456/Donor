@@ -14,6 +14,7 @@
             <th>Umur</th>
             <th>Berat Badan</th>
             <th>Telp</th>
+            <th>Gambar</th>
             <th>Date</th>
             <th>Status Response</th>
             <th>Pesan Response</th>

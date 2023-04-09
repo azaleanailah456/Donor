@@ -37,7 +37,7 @@
             <label for="pesan">Pesan :</label>
             <textarea name="pesan" id="pesan"  rows="3">{{ $darah ? $darah['pesan'] : '' }}</textarea>
         </div>
-        <button type="submit">Kirim Response</button>
+        <button type="submit" style="color:  #fff">Kirim Response</button>
     </form>
 </body>
 </html>

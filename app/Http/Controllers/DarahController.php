@@ -71,7 +71,7 @@ class DarahController extends Controller
 
         //with : ambil relasi (nama fungsi hasOne/hasMany/ belongsTo di modelnya), ambil data dari relasi itu
         $darahs = Darah::with('response')->where('name', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'DESC')->get(); 
-        return view('data.petugas', compact('darahs'));
+        return view('data_petugas', compact('darahs'));
     }
 
     public function auth(Request $request)
@@ -89,8 +89,7 @@ class DarahController extends Controller
             
             if (Auth::user()->role == 'admin') {
             return redirect()->route('data');
-        }
-        elseif (Auth::user()->role == 'petugas') {
+        }elseif (Auth::user()->role == 'petugas') {
             return redirect()->route('data.petugas');
         }
         }else {

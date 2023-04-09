@@ -42,7 +42,7 @@ class ResponseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Response $response)
+    public function edit($darah_id)
     {
         $darah = Response::where('darah_id', $darah_id)->first();
 
@@ -53,7 +53,7 @@ class ResponseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Response $response)
+    public function update(Request $request, $darah_id)
     {
         $request->validate([
             'status' => 'required',

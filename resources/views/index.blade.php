@@ -36,19 +36,26 @@
   <!-- ======= Header ======= -->
   <header id="header" class="top">
     <div class="container d-flex align-items-center">
-
-      <h1 class="logo me-auto"><a href="index.html">Medical Care</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+     <h1 class="logo me-auto"><a href="index.html">Medical Care</a></h1>
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="#contact" >Home</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
+      
+      @if (Auth::check())
+      @if (Auth::user()->role === 'admin')
+          <a href="{{route('data')}}" class="btn-get-started scrollto" style="margin-left: 18px;"><button style="color: #fff">Lihat Data</button></a>   
 
-      <a href="{{route('login')}}" class="appointment-btn scrollto"><span class="d-none d-md-inline">Login</span></a>
+      @elseif (Auth::user()->role == 'petugas')  
+          <a href="{{route('data.petugas')}}" class="btn-get-started scrollto" style="margin-left: 18px;"><button style="color: #fff">Lihat Data</button></a>   
+      @endif
+
+      @else
+        <a href="{{route('login')}}" class="appointment-btn scrollto" style="margin-right: 18px; color:#fff">Login</a>
+      @endif
 
     </div>
   </header><!-- End Header --
@@ -58,8 +65,8 @@
     <div class="container">
       <h1>Welcome to Medilab</h1>
       <h2>We are team of talented designers making websites with Bootstrap</h2>
-      <a href="{{route('data')}}" class="btn-get-started scrollto">Lihat Data</a>
     </div>
+
   </section><!-- End Hero -->
 
   <main id="main">
@@ -121,20 +128,19 @@
         <div class="row mt-5" >
           <div class="col-lg-8 mt-5 mt-lg-0">
 
-            
             @if ($errors->any())
-            <ul style="width: 100%; background: red; padding: 10px">
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            @endif
-
-            @if (Session::get('success'))
-            <div style="width: 100%; background: green; padding: 5px">
-                {{ Session::get('success') }}
-            </div>
-            @endif
+              <ul style="width: 100%; background: red; padding: 10px">
+                  @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+              @endif
+  
+              @if (Session::get('success'))
+              <div style="width: 100%; background: green; padding: 5px">
+                  {{ Session::get('success') }}
+              </div>
+              @endif
   
             <form action="{{route('store')}}" method="post" role="form" enctype="multipart/form-data">
               @csrf

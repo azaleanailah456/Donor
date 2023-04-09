@@ -39,6 +39,7 @@
                     <th>Umur</th>
                     <th>Berat Badan</th>
                     <th>Telp</th>
+                    <th>Date</th>
                     <th>Gambar</th>
                     <th>Status Response</th>
                     <th>Pesan Response</th>
@@ -68,12 +69,14 @@
                     @endphp
 
                     <td><a href="https://wa.me/{{$telp}}?text={{$pesanWA}}" target="_blank">{{$telp}}</a></td>
+                    <td>{{\Carbon\Carbon::parse($darah['created_at'])->format('j, F, Y')}}</td>
                     <td>
                         {{--menampilkan gambar full layar di tab baru--}}
                         <a href="../assets/image/{{$darah->foto}}" target="_blank">
                             <img src="{{asset('assets/image/'.$darah->foto)}}" width="120">
                         </a>
                     </td>
+                    
                     <td>
                         @if ($darah->response)
                             {{ $darah->response['status']}}
@@ -89,13 +92,8 @@
                         @endif
                     </td>
                     <td>
-                        <form action="{{ route('delete', $darah->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" style="margin-button: -15px; color: #fff">Delete</button>
-                        </form>
 
-                        <form action="{{route('created.pdf', $darah->id) }}" method="GET" style="margin-top: 15px;"> 
+                        <form action="{{route('created.pdf', $darah->id) }}" method="GET" style="margin-top: 5px;"> 
                                 <button type="submit" style="color: #fff">Print</button>
                         </form>   
 
