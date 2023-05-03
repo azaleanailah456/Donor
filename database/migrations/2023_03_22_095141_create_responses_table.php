@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('darah_id');
             $table->enum('status', ['ditolak', 'diterima', 'proses']);
-            $table->text('pesan');
+            $table->date('jadwal');
             $table->timestamps();
         });
     }

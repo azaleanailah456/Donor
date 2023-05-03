@@ -12,7 +12,7 @@ class Response extends Model
     protected $fillable = [
         'darah_id',
         'status',
-        'pesan',
+        'jadwal',
     ];
 
     public function darah()

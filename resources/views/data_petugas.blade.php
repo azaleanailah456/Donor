@@ -39,8 +39,8 @@
                     <th>Berat Badan</th>
                     <th>Telp</th>
                     <th>Gambar</th>
-                    <th>Status Response</th>
-                    <th>Pesan Response</th>
+                    <th>Status</th>
+                    <th>Schedule</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -79,7 +79,7 @@
                     </td>
                     <td>
                         @if ($darah->response)
-                            {{$darah->response['pesan']}}
+                            {{$darah->response['jadwal'] ? \Carbon\Carbon::parse($darah->response['jadwal'])->format('j F Y') : '-'}} 
                         @else
                         -
                         @endif

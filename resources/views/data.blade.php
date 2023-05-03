@@ -41,8 +41,8 @@
                     <th>Telp</th>
                     <th>Date</th>
                     <th>Gambar</th>
-                    <th>Status Response</th>
-                    <th>Pesan Response</th>
+                    <th>Status</th>
+                    <th>Schedule</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -86,7 +86,7 @@
                     </td>
                     <td>
                         @if ($darah->response)
-                            {{$darah->response['pesan']}}
+                        {{$darah->response['jadwal'] \Carbon\Carbo::parse($darah->response['jadwal'])->format('j F Y') : '-'}} 
                         @else
                         -
                         @endif

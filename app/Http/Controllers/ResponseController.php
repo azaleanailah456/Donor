@@ -57,8 +57,12 @@ class ResponseController extends Controller
     {
         $request->validate([
             'status' => 'required',
-            'pesan' => 'required',
+            'jadwal' => 'required',
         ]);
+
+        if ($request->status == 'ditolak') {
+            $jadwal = $request->jadwal;
+        }
 
         //updateOrCreate() fungsingnya untuk melakukan update data kaloo emang di db responenya uda ad data yang punya report_id sama dengan $report_id path dinamis, kalau gada data itu maka di create
         //array pertama, acuan cari datanya
@@ -71,11 +75,11 @@ class ResponseController extends Controller
             ],
             [
                 'status' => $request->status,
-                'pesan' => $request->pesan,
+                'jadwal' => $request->jadwal,
             ]
             );
 
-            //setelah berhasil arahkan ke route yang name nya data.petugas dengan pesan alert
+            //setelah berhasil arahkan ke route yang name nya data.petugas dengan jadwal alert
             return redirect()->route('data.petugas')->with('responseSuccess', 'Berhasil mengubah response');
     }
 

@@ -14,7 +14,7 @@ class darah extends Model
         'umur',
         'bb',
         'no_telp',
-        'pesan',
+        'jadwal',
         'donor',
         'foto',
     ];

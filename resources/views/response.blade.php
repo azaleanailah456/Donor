@@ -31,12 +31,20 @@
                 <option value="proses">proses</option>
                 <option value="diterima">diterima</option>
             </select>
-            @endif
+            @endif  
         </div>
         <div class="input-card">
-            <label for="pesan">Pesan :</label>
-            <textarea name="pesan" id="pesan"  rows="3">{{ $darah ? $darah['pesan'] : '' }}</textarea>
+            <input type="date" name="jadwal" id="jadwal" >
         </div>
+        
+        @if ($errors->any())
+        <ul style="width: 100%; background: red; padding: 10px">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        @endif
+
         <button type="submit" style="color:  #fff">Kirim Response</button>
     </form>
 </body>
